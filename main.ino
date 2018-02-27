@@ -12,16 +12,14 @@ void loop() {
   // reply only when you receive data:
   // read the incoming byte:
   val = analogRead(pin);
-  if (val - prevVal > 0){
+  if (val > prevVal){
     digitalWrite(outPin, HIGH);
-  }
-  else {
-    digitalWrite(outPin, LOW);
   }
 
   prevVal = val;
   //  // say what you got:
   // Serial.print("I received: ");
   // Serial.println(val, DEC);
-  // delay(600);
+  delay(60);
+  digitalWrite(outPin, LOW);
 }
