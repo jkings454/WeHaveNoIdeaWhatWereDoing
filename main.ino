@@ -18,6 +18,8 @@ void loop() {
   else {
     digitalWrite(outPin, LOW);
   }
+
+  prevVal = val;
   //  // say what you got:
   // Serial.print("I received: ");
   // Serial.println(val, DEC);
