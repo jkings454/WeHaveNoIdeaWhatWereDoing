@@ -1,6 +1,10 @@
 #define LOG_OUT 1
+#define OCTAVE 1
 
 #include <FFT.h>
+void setup() {
+  
+}
 
 void loop() {
   while(1) { // reduces jitter
@@ -20,18 +24,24 @@ void loop() {
     fft_reorder(); // reorder the data before doing the fft
     fft_run(); // process the data in the fft
     fft_mag_log(); // take the output of the fft
+    fft_mag_octave();
     sei();    
     
     // We have usable FFT data in fft_output, let's convert it into something useful.
     // 10 rows of 0-9 output.
 
     // 0-25 is our bass.
-    int[] freqArr = new int[10];
+    int* freqArr = new int[10];
 
-    for (int i = 0; i < 10, i++) {
-      for (int j = i * 25, i < (i * 25) + 25, i++) {
+    for (int i = 0; i < 10; i++) {
+      for (int j = i * 25; i < (i * 25) + 25; i++) {
         freqArr[i] = freqArr[i] + fft_log_out[i];
       }
     }
+
+    for (int i = 0; i < 10; i++) {
+      Serial.println(i + ": " + freqArr[i]);
+    }
+    delay(1000);
   }
 }
