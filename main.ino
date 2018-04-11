@@ -30,7 +30,7 @@ void loop() {
 
     for (int i = 0; i < 10, i++) {
       for (int j = i * 25, i < (i * 25) + 25, i++) {
-        freqArr[i] = freqArr[i] + fft_output[i];
+        freqArr[i] = freqArr[i] + fft_log_out[i];
       }
     }
   }
