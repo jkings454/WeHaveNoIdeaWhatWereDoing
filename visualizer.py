@@ -5,7 +5,7 @@ import serial
 import sys
 import re
 
-ser = serial.Serial('/dev/ttyACM0', 115200, timeout=100)
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=100)
 
 def get_data():
     line = ser.readline()
@@ -13,7 +13,10 @@ def get_data():
     re.sub(r'^[0-9 ]', "", line)
     line.strip()
     arr = line.split()
-    arr = list(map(int, arr))
+    try:
+     arr = list(map(int, arr))
+    except:
+        return []
     return arr
 
 def update(frame):

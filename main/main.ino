@@ -9,9 +9,9 @@
 #define WIDTH 10
 #define LED_PIN 6
 #define LIGHT_PIN 5
-#define DELAY 1000
+#define DELAY 10000
 
-#define NOISE_REDUCTION 30
+#define NOISE_REDUCTION 50
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(HEIGHT * WIDTH, LED_PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
@@ -52,7 +52,8 @@ void loop()
   for (int i = 0; i < HEIGHT * WIDTH; i++) {
     strip.setPixelColor(i, 0, 0, 0);
   }
-  
+
+  // I don't know what this code does but it works.
   cli(); // UDRE interrupt slows this way down on arduino1.0
   for (int i = 0; i < 512; i += 2)
   { // save 256 samples
@@ -67,6 +68,7 @@ void loop()
     fft_input[i] = k;     // put real data into even bins
     fft_input[i + 1] = 0; // set odd bins to 0
   }
+  
   fft_window();     // window the data for better frequency response
   fft_reorder();    // reorder the data before doing the fft
   fft_run();        // process the data in the fft
@@ -78,7 +80,7 @@ void loop()
 
   for (int i = 0; i < 8; i++)
   {
-    ledOut[i + 1] = constrain((fft_oct_out[i] - NOISE_REDUCTION) / 20, 0, 9);
+    ledOut[i + 1] = constrain((fft_oct_out[i] - NOISE_REDUCTION) / 16, 0, 9);
     average = average + ledOut[i];
     Serial.print(fft_oct_out[i]);
     Serial.print(" ");
